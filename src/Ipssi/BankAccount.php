@@ -1,67 +1,73 @@
 <?php
 
 namespace Ipssi;
-use Ipssi\BalanceValidator;
-class BankAccount {
+
+class BankAccount
+{
     /**
      * @var float
      */
     private $balance;
-    public function __construct($balance=0){
+
+    /**
+     * BankAccount constructor.
+     *
+     * @param float $balance
+     */
+    public function __construct(float $balance = 0)
+    {
         $this->setBalance($balance);
     }
-    
-    /**
-     * Increase balance
-     * 
-     * @param float $balance
-     * @return BankAccount
-     */
-    public function increase(float $balance){
-        \Ipssi\BalanceValidator::valid($balance);
-        
-        $this->balance += $balance;
-        return $this;
-    }
 
     /**
-     * decrease balance
-     * 
-     * @param float $balance
-     * @return BankAccount
+     * @return float
      */
-    public function decrease(float $balance){
-        \Ipssi\BalanceValidator::valid($balance);
-        if ($balance > $this->getBalance()){
-            throw new \InvalidArgumentException('balance to be > 0');
-        }
-        $this->balance += $balance;
-        return $this;
-    }
-
-    /**
-     * Get the value of balance
-     *
-     * @return  float
-     */ 
-    public function getBalance()
+    public function getBalance(): float
     {
         return $this->balance;
     }
 
     /**
-     * Set the value of balance
+     * Increase balance.
      *
-     * @param  float  $balance
+     * @param  float $balance
+     * @return BankAccount
+     * @throws InvalidArgumentException
+     */
+    public function increase(float $balance): BankAccount
+    {
+        BalanceValidator::valid($balance);
+
+        $this->balance += $balance;
+        return $this;
+    }
+
+    /**
+     * Decrease balance.
      *
-     * @return  self
-     */ 
-    public function setBalance(float $balance)
+     * @param  float $balance
+     * @return BankAccount
+     * @throws InvalidArgumentException
+     */
+    public function decrease(float $balance): BankAccount
+    {
+        BalanceValidator::valid($balance);
+
+        if ($balance > $this->getBalance()) {
+            throw new \InvalidArgumentException('balance is over than you got');
+        }
+
+        $this->balance -= $balance;
+        return $this;
+    }
+
+    /**
+     * @param float $balance
+     * @return BankAccount
+     */
+    protected function setBalance(float $balance): BankAccount
     {
         $this->balance = $balance;
-
         return $this;
     }
 }
-
-?>

@@ -1,13 +1,19 @@
 <?php
+
 namespace Ipssi;
-    class BalanceValidator 
+
+class BalanceValidator
+{
+    /**
+     * @param float $balance
+     * @throws InvalidArgumentException
+     */
+    public static function valid(float $balance)
     {
-        public static function valid (float $balance){
-            if($balance <=0){
-                throw new \InvalidArgumentException("balance has to be > 0");
-                
-            }
+        if ($balance <= 0) {
+            throw new \InvalidArgumentException('balance has to be > 0');
         }
     }
-    
-?>
+}
+
+

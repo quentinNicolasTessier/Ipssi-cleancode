@@ -1,20 +1,30 @@
 <?php
 
-namespace Ipssi\service;
-use Psr\Container\ContainerInterface;
-class Container implements ContainerInterface{
-    private $services=[];
+namespace Ipssi\Service;
 
-    public function get($id){
-        if(!$this->has($id)){
-            throw new Exception ("service $id does not exists");
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
+
+class Container implements ContainerInterface
+{
+    private $services = [];
+
+    public function set($id, callable $service)
+    {
+        $this->services[$id] = $service;
+    }
+
+    public function get($id)
+    {
+        if (!$this->has($id)) {
+            throw new Exception("service $id does not exits");
         }
         return $this->services[$id]($this);
     }
-    public function set($id,callable $service){
-            $this->services[$id]=$service;
-    }
-    public function has($id){
-         return array_key_exists($id,$this->services);   
+
+    public function has($id)
+    {
+        return array_key_exists($id, $this->services);
     }
 }

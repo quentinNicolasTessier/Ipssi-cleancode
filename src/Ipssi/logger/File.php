@@ -1,82 +1,75 @@
 <?php
 
 namespace Ipssi\Logger;
-use \Psr\Log\LoggerInterface;
+
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerTrait;
 
 class File implements LoggerInterface
 {
-    use \Psr\Log\LoggerTrait;
     /**
      * @var string
      */
     private $filename;
 
-     /**
+    /**
      * @var Formatter
      */
     private $formatter;
 
-    public function __construct(string $filename){
-        $this->setFilename($filename);
-       
-    }
-    public function log($level,$message,array $context=array()){
-        $fmt= $this->formatter->format($level,Message::interpolate($message,$context));
-        return file_put_contents(
-            $this->getFilename(),
-            $fmt.PHP_EOL,
-            FILE_APPEND
-        );
-    }
-    
+    use LoggerTrait;
 
     /**
-     * Get the value of filename
-     *
-     * @return  string
-     */ 
-    public function getFilename()
+     * File constructor.
+     * @param string $filename
+     */
+    public function __construct(string $filename)
+    {
+        $this->setFilename($filename);
+    }
+
+    /**
+     * @param Formatter $formatter.
+     * @return File
+     */
+    public function setFormater(Formatter $formatter): File
+    {
+        $this->formatter = $formatter;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): string
     {
         return $this->filename;
     }
 
     /**
-     * Set the value of filename
-     *
-     * @param  string  $filename
-     *
-     * @return  self
-     */ 
+     * @param string $filename
+     * @return File
+     */
     public function setFilename(string $filename)
     {
         $this->filename = $filename;
-
         return $this;
     }
 
     /**
-     * Get the value of formatter
-     *
-     * @return  Formatter
-     */ 
-    public function getFormatter()
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     * @return bool|int|void
+     */
+    public function log($level, $message, array $context = array())
     {
-        return $this->formatter;
-    }
+        $msg = $this->formatter->format($level, Message::interpolate($message, $context));
 
-    /**
-     * Set the value of formatter
-     *
-     * @param  Formatter  $formatter
-     *
-     * @return  self
-     */ 
-    public function setFormatter(Formatter $formatter)
-    {
-        $this->formatter = $formatter;
-
-        return $this;
+        return file_put_contents(
+            $this->getFilename(),
+            $msg . PHP_EOL,
+            FILE_APPEND
+        );
     }
 }
-
-?>

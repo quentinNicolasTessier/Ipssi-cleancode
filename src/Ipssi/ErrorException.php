@@ -13,10 +13,17 @@ class ErrorException extends \Exception
     {
         $exception = new self();
         $exception->code = $errno;
-        $exception->message =$errstr;
+        $exception->message = $errstr;
         $exception->file = $errfile;
         $exception->line = $errline;
+
         throw $exception;
     }
 
+    public function __toString()
+    {
+        ob_start();
+        require 'error.phtml';
+        return ob_get_clean();
+    }
 }

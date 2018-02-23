@@ -1,9 +1,15 @@
 <?php
+
 namespace Ipssi\Logger;
 
 class Message
 {
-    public static function interpolate($message, array $context = array())
+    /**
+     * @param string $message
+     * @param array $context
+     * @return string
+     */
+    public static function interpolate(string $message, array $context = array()): string
     {
         $replace = array();
         foreach ($context as $key => $val) {
@@ -12,8 +18,5 @@ class Message
             }
         }
         return strtr($message, $replace);
-    }  
+    }
 }
-
-
-?>
