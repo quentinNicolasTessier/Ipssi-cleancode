@@ -1,0 +1,11 @@
+
+Mon message à logger : hello
+[emergency] 2018-02-21 15:03:08 Mon message à logger : hello
+[emergency] 2018-02-21 15:25:14 Mon message à logger : hello
+[emergency] 2018-02-21 15:25:34 Mon message à logger : hello
+[emergency] 2018-02-21 15:25:39 Mon message à logger : hello
+[emergency] 2018-02-21 15:27:01 Mon message à logger : hello
+[emergency] 2018-02-21 15:31:33 Mon message à logger: hello
+[emergency] 2018-02-21 15:48:03 Mon message à logger: hello
+[emergency] 2018-02-21 15:59:03 Mon message à logger: hello
+[emergency] 2018-02-21 16:11:57 Mon message à logger: hello
